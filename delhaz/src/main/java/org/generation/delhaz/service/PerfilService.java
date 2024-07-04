@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.generation.delhaz.model.Perfil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PerfilService {
 	public final ArrayList<Perfil> lista = new ArrayList<Perfil>();
 	

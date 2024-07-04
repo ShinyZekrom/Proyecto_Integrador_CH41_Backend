@@ -8,13 +8,8 @@ public class DelhazApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DelhazApplication.class, args);
-<<<<<<< HEAD
-	}
-
-}
-=======
 
 	}//main
 
 }//delhazApplicaion class 
->>>>>>> aeabc339e6468773b446e5a464ec2f15406d25fc
+
