@@ -18,6 +18,11 @@ repositories {
 }
 
 dependencies {
+<<<<<<< HEAD
+	
+=======
+
+>>>>>>> aeabc339e6468773b446e5a464ec2f15406d25fc
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
