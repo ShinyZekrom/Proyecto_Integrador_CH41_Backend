@@ -8,6 +8,7 @@ public class DelhazApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DelhazApplication.class, args);
+
 	}//main
 
 }//delhazApplicaion class 
