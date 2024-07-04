@@ -55,5 +55,15 @@ public class PerfilService {
 		}
 		return tmpProfile;
 	}//updateProfile
+
+	public Perfil addProfile(Perfil perfil) {
+		Perfil tmpProfile=null;
+		boolean existe=false;
+			if(! existe) {
+				lista.add(perfil);
+				tmpProfile=perfil;
+			}// if ! existe
+		return tmpProfile;
+	}//addProfile
 	
 }//Class PerfilService
