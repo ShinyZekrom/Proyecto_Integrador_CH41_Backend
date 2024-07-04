@@ -1,18 +1,26 @@
 package org.generation.delhaz.controller;
 
 public class Perfil {
-	private String usuarioId;
+    private int id;
+    private String usuarioId;
     private String biografia;
 
-    
     public Perfil() {
     }
 
-    public Perfil(String usuarioId, String biografia) {
+    public Perfil(int id, String usuarioId, String biografia) {
+        this.id = id;
         this.usuarioId = usuarioId;
         this.biografia = biografia;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsuarioId() {
         return usuarioId;
@@ -30,5 +38,4 @@ public class Perfil {
         this.biografia = biografia;
     }
 }
-
 
