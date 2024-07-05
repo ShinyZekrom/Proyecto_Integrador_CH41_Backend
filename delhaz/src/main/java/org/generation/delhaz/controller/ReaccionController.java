@@ -48,7 +48,7 @@ public class ReaccionController {
     @PutMapping(path = "{reaccionId}") //http://localhost:8080/api/reacciones/1
     public Reaccion updateReaction(@PathVariable("reaccionId") int id,
                                    @RequestParam int tipoReaccionId) {
-        return reaccionService.updateReaction(id, tipoReaccionId, tipoReaccionId, tipoReaccionId, null);
+        return reaccionService.updateReaction(id, tipoReaccionId);
     }
 
 }

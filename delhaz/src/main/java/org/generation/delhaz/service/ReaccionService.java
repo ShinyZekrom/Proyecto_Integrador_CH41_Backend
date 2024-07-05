@@ -53,7 +53,7 @@ public class ReaccionService {
 		return tmpReaction;
     }//addReactiontype
 
-    public Reaccion updateReaction(int id, int usuarioId, int publicacionId, Integer tipoReaccionId, LocalDateTime fechaReaccion) {
+    public Reaccion updateReaction(int id, int tipoReaccionId) {
         Reaccion tmpReaccion = null;
         for (Reaccion reaccion : listaReacciones) {
             if (reaccion.getId() == id) {
