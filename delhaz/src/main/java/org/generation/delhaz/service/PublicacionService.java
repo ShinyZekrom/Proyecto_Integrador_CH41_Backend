@@ -49,7 +49,7 @@ public class PublicacionService {
 
 	}//addPublicacion
 
-    //Solo permite uodate la descripcion y el contenido de la publicacion
+    //Solo permite update la descripcion y el contenido de la publicacion
 	public Publicacion updatePublicacion(Long id, String descripcion, String contenido) {
 		Publicacion tmpPub = null;
 		if (publicacionRepository.existsById(id)) {
