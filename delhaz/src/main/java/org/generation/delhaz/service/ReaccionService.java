@@ -60,8 +60,25 @@ public class ReaccionService {
 		
 	}//addReaccion
 
+<<<<<<< HEAD
 	
 }//classReaccionService
+=======
+    public Reaccion addReaction(Reaccion reaccion) {
+    	Reaccion tmpReaction=null;
+		boolean existe=false;
+		if(! existe) {
+			listaReacciones.add(reaccion);
+			tmpReaction=reaccion;
+		}// if ! existe
+		return tmpReaction;
+    }//addReactiontype
+
+    public Reaccion updateReaction(int id, int tipoReaccionId) {
+        Reaccion tmpReaccion = null;
+        return tmpReaccion;
+    }//updateReaction
+>>>>>>> d732f6ecc410adce5acedfa14a1623be0102be85
 
 
 
