@@ -50,21 +50,23 @@ public class PublicacionService {
 
 	}//addPublicacion
 
-	public Publicacion updatePublicacion(Long id, String usuario, String descripcion, LocalDateTime fechaPublicacion,
-			String contenido) {
-
+    //Solo permite uodate la descripcion y el contenido de la publicacion
+	public Publicacion updatePublicacion(Long id, String descripcion, String contenido) {
 		Publicacion tmpPub = null;
-        if (publicacionRepository.existsById(id)) {
-            Publicacion publicacion = publicacionRepository.findById(id).get();
-            if (usuario != null) publicacion.setUsuario(usuario);
-            if (descripcion != null) publicacion.setDescripcion(descripcion);
-            if (fechaPublicacion != null) publicacion.setFechaPublicacion(fechaPublicacion);
-            if (contenido != null) publicacion.setContenido(contenido);
-            publicacionRepository.save(publicacion);
-            tmpPub = publicacion;
-        }//if
-        return tmpPub;
-	}//updatePublicacion 
+		if (publicacionRepository.existsById(id)) {
+			Publicacion publicacion = publicacionRepository.findById(id).orElse(null);
+			if (descripcion != null)
+				publicacion.setDescripcion(descripcion);
+			if (contenido != null)
+				publicacion.setContenido(contenido);
+			publicacionRepository.save(publicacion);
+			tmpPub = publicacion;
+		} // if
+		return tmpPub;
+
+	}// updatePublicacion
+
+	
 	
 	
 }//class PublicacionService 

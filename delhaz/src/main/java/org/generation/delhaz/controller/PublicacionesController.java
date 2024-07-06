@@ -47,16 +47,14 @@ public class PublicacionesController {
 		return publicacionService.addPublicacion(publicacion);
 	}//addPublicacion
 	
+	
 	@PutMapping(path="{pubId}")
-	public Publicacion updatePublicacion(@PathVariable("pubId") Long id,
-	           @RequestParam(required = false) String usuario,
-	           @RequestParam(required = false) String descripcion,
-	           @RequestParam(required = false) LocalDateTime fechaPublicacion,
-	           @RequestParam(required = false) String contenido) {
-	        return publicacionService.updatePublicacion(id, usuario,
-	           descripcion, fechaPublicacion, contenido);
-		
-	}//updatePublicacion
+    public Publicacion updatePublicacion(@PathVariable("pubId") Long id,
+                                         @RequestParam(required = false) String descripcion,
+                                         @RequestParam(required = false) String contenido) {
+        return publicacionService.updatePublicacion(id, descripcion, contenido);
+    }//update
+
 	
 
 }//PublicacionesController 
