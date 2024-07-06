@@ -1,6 +1,5 @@
 package org.generation.delhaz.controller;
 
-import java.time.LocalDateTime;
 //import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class PublicacionesController {
 		return publicacionService.getAllPublicaciones();
 	}//getPublicaciones 
 	
-	@GetMapping(path="pubId")
+	@GetMapping(path="{pubId}")
 	public Publicacion getPublicacion(@PathVariable("pubId") Long id) {
 		return publicacionService.getPublicacion(id);
 	}//getPublicacion

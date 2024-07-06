@@ -1,6 +1,6 @@
 package org.generation.delhaz.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.generation.delhaz.model.TipoReaccion;
 import org.generation.delhaz.service.TipoReaccionService;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path="/api/tiporeacciones/")
 public class TipoReaccionController {
-	
 	private final TipoReaccionService tipoReaccionService;
 	
 	@Autowired
@@ -27,12 +26,12 @@ public class TipoReaccionController {
     }//constructor
 	
 	@GetMapping //http://localhost:8080/api/tiporeacciones/
-    public ArrayList<TipoReaccion> getAllReactionstype() {
+    public List<TipoReaccion> getAllReactionstype() {
         return tipoReaccionService.getAllReactionstype();
     }//getAllReactiontypes
 	
     @GetMapping(path="{reactiontypeId}") //http://localhost:8080/api/tiporeacciones/1
-    public TipoReaccion getReactiontype(@PathVariable("reactiontypeId") int id) {
+    public TipoReaccion getReactiontype(@PathVariable("reactiontypeId") Long id) {
         return tipoReaccionService.getReactiontype(id);
     }//getReaction
 
@@ -42,12 +41,12 @@ public class TipoReaccionController {
     }//addReaction
 
     @DeleteMapping(path="{reactiontypeId}")
-    public TipoReaccion deleteReactiontype(@PathVariable("reactiontypeId") int id) {
+    public TipoReaccion deleteReactiontype(@PathVariable("reactiontypeId") Long id) {
         return tipoReaccionService.deleteReactiontype(id);
     }//deleteUser
 
-    @PutMapping(path = "{reactiontypeId}") //http://localhost:8080/api/usuarios/1
-    public TipoReaccion updateReactiontype(@PathVariable("reactiontypeId") int id,
+    @PutMapping(path = "{reactiontypeId}") //http://localhost:8080/api/tiporeacciones/1
+    public TipoReaccion updateReactiontype(@PathVariable("reactiontypeId") Long id,
            @RequestParam(required = false) String nombre,
            @RequestParam(required = false) String icono) {
         return tipoReaccionService.updateReactiontype(id, nombre, icono);

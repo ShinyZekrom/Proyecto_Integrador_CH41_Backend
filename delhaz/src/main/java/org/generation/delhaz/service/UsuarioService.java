@@ -28,7 +28,7 @@ public class UsuarioService {
 	
 	public Usuario getUser(Long id) {
 		   return usuarioRepository.findById(id).orElseThrow(
-				   ()-> new IllegalArgumentException("El usuario con el id ["+ 
+				   ()-> new IllegalArgumentException("La reacción con el id ["+ 
 		   id +"] no existe"));
 	}//getUser
 	
@@ -49,14 +49,12 @@ public class UsuarioService {
 	        usuario.setPassword(encoder.encode(usuario.getPassword()));
 	        return usuarioRepository.save(usuario);
 	    } else {
-	        String errorMessage = "";
 	        if (!emailUser.isEmpty()) {
-	            errorMessage += "El usuario con el correo [" + usuario.getEmail() + "] ya existe. ";
+	        	System.out.println("El usuario con el correo [" + usuario.getEmail() + "] ya existe.");
 	        }
 	        if (!usernameUser.isEmpty()) {
-	            errorMessage += "El usuario con el nombre de usuario [" + usuario.getUsername() + "] ya existe. ";
+	        	System.out.println("El usuario con el nombre de usuario [" + usuario.getUsername() + "] ya existe.");
 	        }
-	        System.out.println(errorMessage);
 	        return null;
 	    }
 	}//addUser
