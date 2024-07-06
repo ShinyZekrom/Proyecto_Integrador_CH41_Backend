@@ -55,6 +55,7 @@ public class PublicacionesController {
 	           @RequestParam(required = false) String contenido) {
 	        return publicacionService.updatePublicacion(id, usuario,
 	           descripcion, fechaPublicacion, contenido);
+	   
 		
 	}//updatePublicacion
 	

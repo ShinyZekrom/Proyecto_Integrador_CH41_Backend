@@ -1,47 +1,72 @@
 package org.generation.delhaz.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "reacciones") // Nombre de la tabla en la base de datos
 public class Reaccion {
-    private int id;
-    private int usuarioId;
-    private int publicacionId;
-    private Long tipoReaccionId;
-    private LocalDateTime fechaReaccion;
-    private static int total=0;
-	
-    //1. constructor
-    public Reaccion(int usuarioId, int publicacionId, int tipoReaccionId, LocalDateTime fechaReaccion) {
-		super();
-		this.usuarioId = usuarioId;
-		this.publicacionId = publicacionId;
-		this.tipoReaccionId = (long) tipoReaccionId;
-		this.fechaReaccion = fechaReaccion;
-		Reaccion.total++;
-		this.id = total;
-	}// Contructor
-    
-    //2. Constructor vacio
-    public Reaccion() { 
-		Reaccion.total++;
-		this.id = total;
-    }//constructor vacio
 
-    //3. Getters and Setters
-    public int getUsuarioId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "usuario_id")
+    private Long usuarioId;
+
+    @Column(name = "publicacion_id")
+    private Long publicacionId;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_reaccion_id")
+    private TipoReaccion tipoReaccion;
+
+    @Column(name = "fecha_reaccion")
+    private LocalDateTime fechaReaccion;
+
+    // Constructor con todos los campos
+    public Reaccion(Long usuarioId, Long publicacionId, TipoReaccion tipoReaccion, LocalDateTime fechaReaccion) {
+        this.usuarioId = usuarioId;
+        this.publicacionId = publicacionId;
+        this.tipoReaccion = tipoReaccion;
+        this.fechaReaccion = fechaReaccion;
+    }
+
+    // Constructor vacío
+    public Reaccion() {
+    }
+
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUsuarioId() {
         return usuarioId;
     }
 
-    public int getPublicacionId() {
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public Long getPublicacionId() {
         return publicacionId;
     }
 
-    public Long getTipoReaccionId() {
-        return tipoReaccionId;
+    public void setPublicacionId(Long publicacionId) {
+        this.publicacionId = publicacionId;
     }
 
-    public void setTipoReaccionId(Long tipoReaccionId) {
-        this.tipoReaccionId = tipoReaccionId;
+    public TipoReaccion getTipoReaccion() {
+        return tipoReaccion;
+    }
+
+    public void setTipoReaccion(TipoReaccion tipoReaccion) {
+        this.tipoReaccion = tipoReaccion;
     }
 
     public LocalDateTime getFechaReaccion() {
@@ -52,14 +77,18 @@ public class Reaccion {
         this.fechaReaccion = fechaReaccion;
     }
 
-    public int getId() {
-        return id;
+    // ToString
+    @Override
+    public String toString() {
+        return "Reaccion{" +
+                "id=" + id +
+                ", usuarioId=" + usuarioId +
+                ", publicacionId=" + publicacionId +
+                ", tipoReaccion=" + tipoReaccion +
+                ", fechaReaccion=" + fechaReaccion +
+                '}';
     }
+}
 
-	//4. Tostring
-	@Override
-	public String toString() {
-		return "Reacciones [id=" + id + ", usuarioId=" + usuarioId + ", publicacionId=" + publicacionId
-				+ ", tipoReaccion=" + tipoReaccionId + ", fechaReaccion=" + fechaReaccion + "]";
-	}//Tostring
-}//classReaccion
+
+
