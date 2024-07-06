@@ -107,8 +107,11 @@ public class Usuario {
 	    return perfil;
 	}//getPerfil
 
-	public void setPerfil(Perfil perfil) {
-	    this.perfil = perfil;
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+        if (perfil != null) {
+            perfil.setUsuario(this);
+        }
 	}//setPerfil
 	
 	//4. toString

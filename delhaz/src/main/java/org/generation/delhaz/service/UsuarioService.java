@@ -1,8 +1,9 @@
 package org.generation.delhaz.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.generation.delhaz.dto.ChangePassword;
 import org.generation.delhaz.model.Perfil;
@@ -16,16 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UsuarioService {
 	public final UsuarioRepository usuarioRepository;
 	
-	public Usuario registrarUsuario(Usuario usuario) {
-        usuario.setFechaRegistro(LocalDateTime.now());
-        // Crear un nuevo perfil y asociarlo al usuario
-        Perfil perfil = new Perfil();
-        usuario.setPerfil(perfil);
-        perfil.setUsuario(usuario);
-        
-        return usuarioRepository.save(usuario);
-    }//registrarUsuario
-	
 	@Autowired
 	private PasswordEncoder encoder;
 	
@@ -33,6 +24,24 @@ public class UsuarioService {
 	public UsuarioService(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
 	}// constructor
+	
+	@Transactional
+    public Usuario crearUsuario(Usuario usuario) throws IllegalArgumentException {
+        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("El usuario con el correo [" + usuario.getEmail() + "] ya existe.");
+        }
+        if (usuarioRepository.findByUsername(usuario.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("El usuario con el nombre de usuario [" + usuario.getUsername() + "] ya existe.");
+        }
+
+        usuario.setPassword(encoder.encode(usuario.getPassword()));
+
+        Perfil nuevoPerfil = new Perfil();
+        nuevoPerfil.setUsuario(usuario);
+        usuario.setPerfil(nuevoPerfil);
+
+        return usuarioRepository.save(usuario);
+    }
 	
 	public List<Usuario> getAllUsers(){
 		return usuarioRepository.findAll();
@@ -53,7 +62,8 @@ public class UsuarioService {
 		return tmpUser;
 	}//deleteUser
 
-	public Usuario addUser(Usuario usuario) {
+	/*
+	 * 	public Usuario addUser(Usuario usuario) {
 	    Optional<Usuario> emailUser = usuarioRepository.findByEmail(usuario.getEmail());
 	    Optional<Usuario> usernameUser = usuarioRepository.findByUsername(usuario.getUsername());
 
@@ -70,6 +80,8 @@ public class UsuarioService {
 	        return null;
 	    }
 	}//addUser
+	 * */
+
 
 	public Usuario updateUser(Long id, ChangePassword changePassword) {
 		Usuario tmpUser = null;

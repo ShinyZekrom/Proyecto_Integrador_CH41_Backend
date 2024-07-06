@@ -6,6 +6,8 @@ import org.generation.delhaz.dto.ChangePassword;
 import org.generation.delhaz.model.Usuario;
 import org.generation.delhaz.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,10 +38,24 @@ public class UsuarioController {
         return usuarioService.getUser(id);
     }//getUser
 
-    @PostMapping
+    /*
+     *     @PostMapping("add")
     public Usuario addUser(@RequestBody Usuario usuario) {
         return usuarioService.addUser(usuario);
     }//addUser
+     * */
+    
+    @PostMapping
+    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario) {
+        try {
+            Usuario usuarioCreado = usuarioService.crearUsuario(usuario);
+            return new ResponseEntity<>(usuarioCreado, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al crear el usuario: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @DeleteMapping(path="{userId}")
     public Usuario deleteUser(@PathVariable("userId") Long id) {
