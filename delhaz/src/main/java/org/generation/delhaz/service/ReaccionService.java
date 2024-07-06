@@ -1,70 +1,50 @@
 package org.generation.delhaz.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 import org.generation.delhaz.model.Reaccion;
+import org.generation.delhaz.repository.ReaccionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReaccionService {
-    public final ArrayList<Reaccion> listaReacciones = new ArrayList<Reaccion>();
+
+    private final ReaccionRepository reaccionRepository;
 
     @Autowired
-    public ReaccionService() {
-        listaReacciones.add(new Reaccion(1, 1, 1,LocalDateTime.now()));
-        listaReacciones.add(new Reaccion(2, 2, 1,LocalDateTime.now()));
-        
+    public ReaccionService(ReaccionRepository reaccionRepository) {
+        this.reaccionRepository = reaccionRepository;
     }
 
-    public ArrayList<Reaccion> getAllReactions() {
-        return listaReacciones;
-    }//getAllReactions
+    public List<Reaccion> getAllReactions() {
+        return reaccionRepository.findAll();
+    }
 
-    public Reaccion getReaction(int id) {
-        Reaccion tmpReaccion = null;
-        for (Reaccion reaccion : listaReacciones) {
-            if (reaccion.getId() == id) {
-                tmpReaccion = reaccion;
-                break;
-            }
-        }
-        return tmpReaccion;
-    }//getReaction
+    public Reaccion getReaction(Long id) {
+        return reaccionRepository.findById(id).orElse(null);
+    }
 
-    public Reaccion deleteReaction(int id) {
-        Reaccion tmpReaccion = null;
-        for (Reaccion reaccion : listaReacciones) {
-            if (reaccion.getId() == id) {
-                tmpReaccion = listaReacciones.remove(listaReacciones.indexOf(reaccion));
-                break;
-            }
+    public Reaccion deleteReaction(Long id) {
+        Reaccion reaccion = reaccionRepository.findById(id).orElse(null);
+        if (reaccion != null) {
+            reaccionRepository.deleteById(id);
         }
-        return tmpReaccion;
-    }//deleteReaction
+        return reaccion;
+    }
 
     public Reaccion addReaction(Reaccion reaccion) {
-    	Reaccion tmpReaction=null;
-		boolean existe=false;
-		if(! existe) {
-			listaReacciones.add(reaccion);
-			tmpReaction=reaccion;
-		}// if ! existe
-		return tmpReaction;
-    }//addReactiontype
+        return reaccionRepository.save(reaccion);
+    }
 
-    public Reaccion updateReaction(int id, int usuarioId, int publicacionId, Integer tipoReaccionId, LocalDateTime fechaReaccion) {
-        Reaccion tmpReaccion = null;
-        for (Reaccion reaccion : listaReacciones) {
-            if (reaccion.getId() == id) {
-                if (tipoReaccionId != null)
-                    reaccion.setTipoReaccionId(tipoReaccionId);
-                tmpReaccion = reaccion;
-                break;
+    public Reaccion updateReaction(Long id, Long tipoReaccionId) {
+        Reaccion reaccion = reaccionRepository.findById(id).orElse(null);
+        if (reaccion != null) {
+            if (tipoReaccionId != 0) {
+                reaccion.setTipoReaccionId(tipoReaccionId);
             }
+            reaccion = reaccionRepository.save(reaccion);
         }
-        return tmpReaccion;
+        return reaccion;
     }//updateReaction
-
-
-}//class ReaccionService
+}//classReaccionService 

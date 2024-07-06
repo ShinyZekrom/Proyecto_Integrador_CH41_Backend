@@ -6,7 +6,7 @@ public class Reaccion {
     private int id;
     private int usuarioId;
     private int publicacionId;
-    private int tipoReaccionId;
+    private Long tipoReaccionId;
     private LocalDateTime fechaReaccion;
     private static int total=0;
 	
@@ -15,7 +15,7 @@ public class Reaccion {
 		super();
 		this.usuarioId = usuarioId;
 		this.publicacionId = publicacionId;
-		this.tipoReaccionId = tipoReaccionId;
+		this.tipoReaccionId = (long) tipoReaccionId;
 		this.fechaReaccion = fechaReaccion;
 		Reaccion.total++;
 		this.id = total;
@@ -28,38 +28,33 @@ public class Reaccion {
     }//constructor vacio
 
     //3. Getters and Setters
-	public int getUsuarioId() {
-		return usuarioId;
-	}//getUsuario
+    public int getUsuarioId() {
+        return usuarioId;
+    }
 
-	public int getPublicacionId() {
-		return publicacionId;
-	}//getPublicacion
+    public int getPublicacionId() {
+        return publicacionId;
+    }
 
-	public void setTipoReaccion(int tipoReaccion) {
-		this.tipoReaccionId = tipoReaccion;
-	}//setTipoReaccion
+    public Long getTipoReaccionId() {
+        return tipoReaccionId;
+    }
 
-	public LocalDateTime getFechaReaccion() {
-		return fechaReaccion;
-	}//getFechaReaccion
+    public void setTipoReaccionId(Long tipoReaccionId) {
+        this.tipoReaccionId = tipoReaccionId;
+    }
 
-	public void setFechaReaccion(LocalDateTime fechaReaccion) {
-		this.fechaReaccion = fechaReaccion;
-	}//setFechaReaccion
+    public LocalDateTime getFechaReaccion() {
+        return fechaReaccion;
+    }
 
-	public int getId() {
-		return id;
-	}//getId
-	
-	
-	public int getTipoReaccionId() {
-		return tipoReaccionId;
-	}
+    public void setFechaReaccion(LocalDateTime fechaReaccion) {
+        this.fechaReaccion = fechaReaccion;
+    }
 
-	public void setTipoReaccionId(int tipoReaccionId) {
-		this.tipoReaccionId = tipoReaccionId;
-	}
+    public int getId() {
+        return id;
+    }
 
 	//4. Tostring
 	@Override
@@ -67,4 +62,4 @@ public class Reaccion {
 		return "Reacciones [id=" + id + ", usuarioId=" + usuarioId + ", publicacionId=" + publicacionId
 				+ ", tipoReaccion=" + tipoReaccionId + ", fechaReaccion=" + fechaReaccion + "]";
 	}//Tostring
-}
+}//classReaccion

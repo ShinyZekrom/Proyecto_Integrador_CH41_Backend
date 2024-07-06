@@ -67,7 +67,7 @@ public class UsuarioService {
 		return tmpUser;
 	}//addUser
 
-	public Usuario updateUser(int id, String nombre, String username, String email, String contraseña,
+	public Usuario updateUser(int id, String nombre, String username, String email, String password,
 			LocalDateTime fechaRegistro, String fotoPerfil) {
 		Usuario tmpUser = null;
 		for (Usuario usuario : lista) {
@@ -78,8 +78,8 @@ public class UsuarioService {
 					usuario.setUsername(username);
 				if (email != null)
 					usuario.setEmail(email);
-				if (contraseña != null)
-					usuario.setContraseña(contraseña);
+				if (password != null)
+					usuario.setPassword(password);
 				if (fechaRegistro!= null)
 					usuario.setFechaRegistro(fechaRegistro);
 				if (fotoPerfil != null)

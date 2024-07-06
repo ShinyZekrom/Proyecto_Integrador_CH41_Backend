@@ -1,6 +1,8 @@
 package org.generation.delhaz.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.generation.delhaz.model.Reaccion;
 import org.generation.delhaz.service.ReaccionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,12 @@ public class ReaccionController {
     }
 
     @GetMapping //http://localhost:8080/api/reacciones/
-    public ArrayList<Reaccion> getAllReactions() {
+    public List<Reaccion> getAllReactions() {
         return reaccionService.getAllReactions();
     }
 
     @GetMapping(path="{reaccionId}") //http://localhost:8080/api/reacciones/1
-    public Reaccion getReaction(@PathVariable("reaccionId") int id) {
+    public Reaccion getReaction(@PathVariable("reaccionId") Long id) {
         return reaccionService.getReaction(id);
     }
 
@@ -41,14 +43,14 @@ public class ReaccionController {
     }
     
     @DeleteMapping(path="{reaccionId}")
-    public Reaccion deleteReaction(@PathVariable("reaccionId") int id) {
+    public Reaccion deleteReaction(@PathVariable("reaccionId") Long id) {
         return reaccionService.deleteReaction(id);
     }
 
     @PutMapping(path = "{reaccionId}") //http://localhost:8080/api/reacciones/1
-    public Reaccion updateReaction(@PathVariable("reaccionId") int id,
-                                   @RequestParam int tipoReaccionId) {
-        return reaccionService.updateReaction(id, tipoReaccionId, tipoReaccionId, tipoReaccionId, null);
+    public Reaccion updateReaction(@PathVariable("reaccionId") Long id,
+                                   @RequestParam Long tipoReaccionId) {
+        return reaccionService.updateReaction(id, tipoReaccionId);
     }
 
-}
+}//ReaccionService

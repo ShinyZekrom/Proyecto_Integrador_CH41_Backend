@@ -8,19 +8,19 @@ public class Usuario {
 	private String nombre;
 	private String username;
 	private String email;
-	private String contraseña;
+	private String password;
 	private LocalDateTime fechaRegistro;
 	private String fotoPerfil;
 	private static int total=0;
 	
 	//1. Constructor
-	public Usuario(String nombre, String username, String email, String contraseña,
+	public Usuario(String nombre, String username, String email, String password,
 			LocalDateTime fechaRegistro, String fotoPerfil) {
 		super();
 		this.nombre = nombre;
 		this.username = username;
 		this.email = email;
-		this.contraseña = contraseña;
+		this.password = password;
 		this.fechaRegistro = LocalDateTime.now();
 		this.fotoPerfil = fotoPerfil;
 		Usuario.total++;
@@ -60,12 +60,12 @@ public class Usuario {
 		this.email = email;
 	}//setEmail
 
-	public String getContraseña() {
-		return contraseña;
+	public String getPassword() {
+		return password;
 	}//getContraseña
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setPassword(String password) {
+		this.password = password;
 	}//setContraseña
 
 	public LocalDateTime getFechaRegistro() {
@@ -94,7 +94,7 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
-				+ ", contraseña=" + contraseña + ", fecha_registro=" + fechaRegistro + ", foto_perfil=" + fotoPerfil
+				+ ", contraseña=" + password + ", fecha_registro=" + fechaRegistro + ", foto_perfil=" + fotoPerfil
 				+ "]";
 	}//toString
 	

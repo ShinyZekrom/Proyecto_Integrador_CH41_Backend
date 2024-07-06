@@ -52,10 +52,10 @@ public class UsuarioController {
            @RequestParam(required = false) String nombre,
            @RequestParam(required = false) String username,
            @RequestParam(required = false) String email,
-           @RequestParam(required = false) String contraseña,
+           @RequestParam(required = false) String password,
            @RequestParam(required = false) LocalDateTime fechaRegistro,
            @RequestParam(required = false) String fotoPerfil) {
         return usuarioService.updateUser(id, nombre, username,
-                email, contraseña, fechaRegistro, fotoPerfil);
+                email, password, fechaRegistro, fotoPerfil);
     }//updateUser
 }//class UsuarioController
