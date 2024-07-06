@@ -19,8 +19,11 @@ public class Publicacion {
 	private Long id;
 	@Column(nullable=false)
 	private String usuario;
+	@Column(nullable=false)
 	private String descripcion;
+	@Column(nullable=false)
 	private LocalDateTime fechaPublicacion;
+	@Column(nullable=false)
 	private String contenido;
 
 	

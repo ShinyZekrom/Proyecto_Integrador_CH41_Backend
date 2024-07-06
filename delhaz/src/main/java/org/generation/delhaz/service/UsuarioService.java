@@ -1,94 +1,91 @@
 package org.generation.delhaz.service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+import org.generation.delhaz.dto.ChangePassword;
 import org.generation.delhaz.model.Usuario;
+import org.generation.delhaz.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class UsuarioService {
-	public final ArrayList<Usuario> lista = new ArrayList<Usuario>();
+	public final UsuarioRepository usuarioRepository;
 	
 	@Autowired
-	public UsuarioService() {
-		lista.add(new Usuario("Karen Garcia", "karen_garcia", "karen123@hotmail.com", "Dk_170195", LocalDateTime.now(), 
-				"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719518028/WhatsApp_Image_2024-06-20_at_11.30.09_tl2flj.jpg"));
-		lista.add(new Usuario("Luis Maldonado", "luis_mald", "luis456@hotmail.com", "Luis0123#", LocalDateTime.now(),
-				"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719518755/98_t149wy.jpg"));
-		lista.add(new Usuario("Carol Hernandez", "carol_hrdz", "carol789@hotmail.com", "Hrdz?4567", LocalDateTime.now(),
-				"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719523146/conoce-5-lenguajes-de-programacion-basicos_s4lbwy.jpg"));
-		lista.add(new Usuario("Alan Trejo", "alan_trejo", "alan123@hotmail.com","Trejo.890", LocalDateTime.now(),
-				"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719523691/images_1_bovq12.jpg"));
-		lista.add(new Usuario("Gibran Diaz", "gibran_12di", "gibran456@hotmail.com", "Di234569?", LocalDateTime.now(),
-				"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719523749/images_tlbyg9.jpg"));
-
+	private PasswordEncoder encoder;
+	
+	@Autowired
+	public UsuarioService(UsuarioRepository usuarioRepository) {
+		this.usuarioRepository = usuarioRepository;
 	}// constructor
 	
-	public ArrayList<Usuario> getAllUsers(){
-		return lista;
+	public List<Usuario> getAllUsers(){
+		return usuarioRepository.findAll();
 	}// getAllUsers
 	
-	public Usuario getUser(int id) {
-		Usuario tmpUser=null;
-		for (Usuario usuario : lista) {
-			if(usuario.getId()==id) {
-				tmpUser= usuario;
-			}// if
-		}// foreach
-		return tmpUser;
+	public Usuario getUser(Long id) {
+		   return usuarioRepository.findById(id).orElseThrow(
+				   ()-> new IllegalArgumentException("El usuario con el id ["+ 
+		   id +"] no existe"));
 	}//getUser
 	
-	public Usuario deleteUser(int id) {
+	public Usuario deleteUser(Long id) {
 		Usuario tmpUser = null;
-		for (Usuario usuario : lista) {
-			if(usuario.getId()==id) {
-				tmpUser= lista.remove(lista.indexOf(usuario));
-				break;
-			}//if
-		}//for each
+		if (usuarioRepository.existsById(id)) {
+			tmpUser=usuarioRepository.findById(id).get();
+			usuarioRepository.deleteById(id);
+		}//if
 		return tmpUser;
 	}//deleteUser
 
 	public Usuario addUser(Usuario usuario) {
-		Usuario tmpUser=null;
-		boolean existe=false;
-		for (Usuario user : lista) {
-			if(user.getNombre().equals(usuario.getNombre())) {
-				existe = true;
-				break;
-			}// if
-		}//foreach
-		if(! existe) {
-			lista.add(usuario);
-			tmpUser=usuario;
-		}// if ! existe
-		return tmpUser;
+	    Optional<Usuario> emailUser = usuarioRepository.findByEmail(usuario.getEmail());
+	    Optional<Usuario> usernameUser = usuarioRepository.findByUsername(usuario.getUsername());
+
+	    if (emailUser.isEmpty() && usernameUser.isEmpty()) {
+	        usuario.setPassword(encoder.encode(usuario.getPassword()));
+	        return usuarioRepository.save(usuario);
+	    } else {
+	        String errorMessage = "";
+	        if (!emailUser.isEmpty()) {
+	            errorMessage += "El usuario con el correo [" + usuario.getEmail() + "] ya existe. ";
+	        }
+	        if (!usernameUser.isEmpty()) {
+	            errorMessage += "El usuario con el nombre de usuario [" + usuario.getUsername() + "] ya existe. ";
+	        }
+	        System.out.println(errorMessage);
+	        return null;
+	    }
 	}//addUser
 
-	public Usuario updateUser(int id, String nombre, String username, String email, String password,
-			LocalDateTime fechaRegistro, String fotoPerfil) {
+	public Usuario updateUser(Long id, ChangePassword changePassword) {
 		Usuario tmpUser = null;
-		for (Usuario usuario : lista) {
-			if (usuario.getId() == id) {
-				if (nombre != null)
-					usuario.setNombre(nombre);
-				if (username != null)
-					usuario.setUsername(username);
-				if (email != null)
-					usuario.setEmail(email);
-				if (password != null)
-					usuario.setPassword(password);
-				if (fechaRegistro!= null)
-					usuario.setFechaRegistro(fechaRegistro);
-				if (fotoPerfil != null)
-					usuario.setFotoPerfil(fotoPerfil);
-				tmpUser = usuario;
-				break;
-			}
-		}
+		if(usuarioRepository.existsById(id)) {
+			tmpUser = usuarioRepository.findById(id).get();
+			if(encoder.matches(changePassword.getPassword(), tmpUser.getPassword())) {	
+			tmpUser.setPassword(encoder.encode(changePassword.getNewpassword()));
+			usuarioRepository.save(tmpUser);
+			}else {
+				System.out.println("updateUser - El password del usuario [" + id + "] no coincide");
+				tmpUser=null;
+			}//if equals
+		}//if existsById
 		return tmpUser;
 	}//updateUser
+
+	public boolean validateUser(Usuario usuario) {
+		Optional <Usuario> userByEmail =
+						usuarioRepository.findByEmail(usuario.getEmail());
+		if(userByEmail.isPresent()) {
+			Usuario tmpUser =userByEmail.get();
+			if(encoder.matches(usuario.getPassword(), tmpUser.getPassword())) {
+				return true;
+			}//if encoder.matches
+		}//if isPresent()
+		return false;
+	}//validateUser
 
 }//class UsuarioService
