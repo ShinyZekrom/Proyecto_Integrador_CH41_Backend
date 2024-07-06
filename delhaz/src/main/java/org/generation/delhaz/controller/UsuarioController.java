@@ -1,8 +1,8 @@
 package org.generation.delhaz.controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
+import org.generation.delhaz.dto.ChangePassword;
 import org.generation.delhaz.model.Usuario;
 import org.generation.delhaz.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,12 +27,12 @@ public class UsuarioController {
     }//constructor
 
     @GetMapping //http://localhost:8080/api/usuarios/
-    public ArrayList<Usuario> getAllUsers() {
+    public List<Usuario> getAllUsers() {
         return usuarioService.getAllUsers();
     }//getAllUsers
 
     @GetMapping(path="{userId}") //http://localhost:8080/api/usuarios/1
-    public Usuario getUserById(@PathVariable("userId") int id) {
+    public Usuario getUserById(@PathVariable("userId") Long id) {
         return usuarioService.getUser(id);
     }//getUser
 
@@ -43,19 +42,14 @@ public class UsuarioController {
     }//addUser
 
     @DeleteMapping(path="{userId}")
-    public Usuario deleteUser(@PathVariable("userId") int id) {
+    public Usuario deleteUser(@PathVariable("userId") Long id) {
         return usuarioService.deleteUser(id);
     }//deleteUser
 
-    @PutMapping(path = "{userId}") //http://localhost:8080/api/usuarios/1
-    public Usuario updateUsuario(@PathVariable("userId") int id,
-           @RequestParam(required = false) String nombre,
-           @RequestParam(required = false) String username,
-           @RequestParam(required = false) String email,
-           @RequestParam(required = false) String password,
-           @RequestParam(required = false) LocalDateTime fechaRegistro,
-           @RequestParam(required = false) String fotoPerfil) {
-        return usuarioService.updateUser(id, nombre, username,
-                email, password, fechaRegistro, fotoPerfil);
-    }//updateUser
+	@PutMapping(path="{userId}") 
+	public Usuario updateUsuario(@RequestBody ChangePassword changePassword, 
+			@PathVariable("userId") Long id) {
+		return usuarioService.updateUser(id, changePassword);
+	}//updateUsuario
+    
 }//class UsuarioController

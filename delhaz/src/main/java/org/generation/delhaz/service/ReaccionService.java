@@ -55,14 +55,6 @@ public class ReaccionService {
 
     public Reaccion updateReaction(int id, int tipoReaccionId) {
         Reaccion tmpReaccion = null;
-        for (Reaccion reaccion : listaReacciones) {
-            if (reaccion.getId() == id) {
-                if (tipoReaccionId != null)
-                    reaccion.setTipoReaccionId(tipoReaccionId);
-                tmpReaccion = reaccion;
-                break;
-            }
-        }
         return tmpReaccion;
     }//updateReaction
 
