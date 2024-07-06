@@ -2,11 +2,14 @@ package org.generation.delhaz.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +31,9 @@ public class Usuario {
 	private LocalDateTime fechaRegistro;
 	@Column(nullable=false)
 	private String fotoPerfil;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "perfil_id", referencedColumnName = "id")
+    private Perfil perfil;
 	
 	//1. Constructor
 	public Usuario(Long id, String nombre, String username, String email, String password, LocalDateTime fechaRegistro,
@@ -41,12 +47,9 @@ public class Usuario {
 		this.fotoPerfil = fotoPerfil;
 	}//Constructor
 
-
-
 	//2. constructor vacio
 	public Usuario() {}// constructor vacio
 
-	
 	//3. Getters and Setters
 	public String getNombre() {
 		return nombre;
@@ -100,19 +103,21 @@ public class Usuario {
 		return id;
 	}//getId
 
+	public Perfil getPerfil() {
+	    return perfil;
+	}//getPerfil
+
+	public void setPerfil(Perfil perfil) {
+	    this.perfil = perfil;
+	}//setPerfil
 	
 	//4. toString
 	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
-				+ ", contraseña=" + password + ", fecha_registro=" + fechaRegistro + ", foto_perfil=" + fotoPerfil
+				+ ", password=" + password + ", fechaRegistro=" + fechaRegistro + ", fotoPerfil=" + fotoPerfil
 				+ "]";
 	}//toString
 	
-	
-	
-	
-	
-	
-}
+}//class Usuario

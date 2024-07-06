@@ -1,9 +1,11 @@
 package org.generation.delhaz.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.generation.delhaz.dto.ChangePassword;
+import org.generation.delhaz.model.Perfil;
 import org.generation.delhaz.model.Usuario;
 import org.generation.delhaz.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Service
 public class UsuarioService {
 	public final UsuarioRepository usuarioRepository;
+	
+	public Usuario registrarUsuario(Usuario usuario) {
+        usuario.setFechaRegistro(LocalDateTime.now());
+        // Crear un nuevo perfil y asociarlo al usuario
+        Perfil perfil = new Perfil();
+        usuario.setPerfil(perfil);
+        perfil.setUsuario(usuario);
+        
+        return usuarioRepository.save(usuario);
+    }//registrarUsuario
 	
 	@Autowired
 	private PasswordEncoder encoder;

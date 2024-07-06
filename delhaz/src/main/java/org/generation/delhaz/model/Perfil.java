@@ -1,27 +1,40 @@
 package org.generation.delhaz.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "perfiles")
 public class Perfil {
-	private int id;
-	private int usuario_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+    @OneToOne(mappedBy = "perfil")
+	private Usuario usuario;
+    @Column(columnDefinition = "TEXT")
 	private String descripcion;
-	private static int total=0;
 	
-	public Perfil(int usuario_id, String descripcion) {
-		this.usuario_id = usuario_id;
+    //1.Constructor
+	public Perfil(String descripcion) {
 		this.descripcion = descripcion;
-		Perfil.total++;
-		this.id = total;
 	}//constructor
 	
-	public Perfil() {
-		Perfil.total++;
-		this.id = total;
-	}//constructor vacio
+	//2.Constructor vacio
+	public Perfil() { }//constructor vacio
 
-	public int getUsuario_id() {
-		return usuario_id;
-	}//getUsuario_id
+	//3.Getters and Setters
+	public Usuario getUsuario() {
+		return usuario;
+	}//getUsuario
 
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}//setUsuario
 
 	public String getDescripcion() {
 		return descripcion;
@@ -31,14 +44,16 @@ public class Perfil {
 		this.descripcion = descripcion;
 	}//setDescripcion
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}//getId
 
 	@Override
 	public String toString() {
-		return "Perfil [id=" + id + ", usuario_id=" + usuario_id + ", descripcion=" + descripcion + "]";
-	}//toString
+		return "Perfil [id=" + id + ", descripcion=" + descripcion + "]";
+	}
+	//4. toString
 	
+
 	
 }//Class Perfil
