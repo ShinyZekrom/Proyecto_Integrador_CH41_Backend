@@ -53,7 +53,7 @@ public class UsuarioService {
 	        	System.out.println("El usuario con el correo [" + usuario.getEmail() + "] ya existe.");
 	        }
 	        if (!usernameUser.isEmpty()) {
-	        	System.out.println("El usuario con el nombre de usuario [" + usuario.getUsername() + "] ya existe.");
+	        	System.out.println("El usuario con el nombre [" + usuario.getUsername() + "] ya existe.");
 	        }
 	        return null;
 	    }

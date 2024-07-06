@@ -1,69 +1,41 @@
 package org.generation.delhaz.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.generation.delhaz.model.Perfil;
+import org.generation.delhaz.repository.PerfilRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PerfilService {
-	public final ArrayList<Perfil> lista = new ArrayList<Perfil>();
+	public PerfilRepository perfilRepository;
 	
 	@Autowired
-	public PerfilService() {
-		lista.add(new Perfil(1, "Amante de la naturaleza y la fotografía"));
-		lista.add(new Perfil(2, "Desarrollador de software y entusiasta de la tecnología"));
-		lista.add(new Perfil(3, "Estudiante de medicina, apasionada por la salud"));
-		lista.add(new Perfil(4, "Chef profesional, creador de sabores únicos"));
-		lista.add(new Perfil(5, "Artista visual y diseñadora gráfica"));
-	}
+	public PerfilService(PerfilRepository perfilRepository) {
+		this.perfilRepository = perfilRepository;
+	}//constructor
 	
-	public ArrayList<Perfil> getAllProfiles(){
-		return lista;
+	public List<Perfil> getAllProfiles(){
+		return perfilRepository.findAll();
 	}// getAllProfiles
 	
-	public Perfil getProfile(int id) {
-		Perfil tmpProfile=null;
-		for (Perfil perfil : lista) {
-			if(perfil.getId()==id) {
-				tmpProfile= perfil;
-			}// if
-		}// foreach
-		return tmpProfile;
+	public Perfil getProfile(Long id) {
+		return perfilRepository.findById(id).orElseThrow(
+				()-> new IllegalArgumentException("El perfil con el id [" + id + "] no existe"));
 	}//getProfile
 	
-	public Perfil deleteProfile(int id) {
-		Perfil tmpProfile = null;
-		for (Perfil perfil : lista) {
-			if(perfil.getId()==id) {
-				tmpProfile= lista.remove(lista.indexOf(perfil));
-				break;
-			}//if
-		}//for each
-		return tmpProfile;
-	}//deleteProfile
 
-	public Perfil updateProfile(int id, String descripcion) {
+	public Perfil updateProfile(Long id, String descripcion) {
 		Perfil tmpProfile = null;
-		for (Perfil perfil : lista) {
-			if (perfil.getId() == id) {
-				if (descripcion != null)
-					perfil.setDescripcion(descripcion);
-				break;
-			}
+			if (perfilRepository.existsById(id)) {
+				Perfil perfil=perfilRepository.findById(id).get();
+				if (descripcion != null) perfil.setDescripcion(descripcion);
+				perfilRepository.save(perfil);
+				tmpProfile=perfil;
 		}
 		return tmpProfile;
 	}//updateProfile
 
-	public Perfil addProfile(Perfil perfil) {
-		Perfil tmpProfile=null;
-		boolean existe=false;
-			if(! existe) {
-				lista.add(perfil);
-				tmpProfile=perfil;
-			}// if ! existe
-		return tmpProfile;
-	}//addProfile
 	
 }//Class PerfilService
