@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="/api/perfil/")
+@RequestMapping(path="/api/perfiles/")
 public class PerfilController {
 	private final PerfilService perfilService;
 	
