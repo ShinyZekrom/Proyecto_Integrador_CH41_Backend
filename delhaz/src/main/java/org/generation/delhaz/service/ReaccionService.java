@@ -6,79 +6,52 @@ import org.generation.delhaz.repository.ReaccionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReaccionService {	
-    private final List<ReaccionRequest> lista = new ArrayList<>();
-    private final List<Reacccion> reacciones = new ArrayList<>();
-    @Autowired
-    public ReaccionService() {
-    	reacciones.add(new Reaccion("Me encanta"));
-        reacciones.add(new Reaccion("Me inspira"));
-        reacciones.add(new Reaccion("Me divierte"));
-        reacciones.add(new Reaccion("Me interesa"));
-        reacciones.add(new Reaccion("Me entristece"));
-    }//constructor
+    public final ReaccionRepository reaccionRepository ;
     
-	public List<ReaccionRequest> getAllReacciones() {		
-		return listaReacciones;
-	}//
+    @Autowired
+    public ReaccionService(ReaccionRepository reaccionRepository) {
+    	this.reaccionRepository = reaccionRepository;
+    }//constructor
 
-	public ReaccionRequest getReaccionRequest(int id) {
-		for(ReaccionRequest reaccion : listaReacciones) {
-			if(reaccion.getId()==id) {
-				return reaccion;
-			}//if
-		}//foreach
-		return null;
+	public List<Reaccion> getAllReacciones() {
+		return reaccionRepository.findAll();
+	}//getAllReacciones
+
+	public Reaccion getReaccion(Long id) {
+		return reaccionRepository.findById(id).orElseThrow(
+				() -> new IllegalArgumentException("La reaccion con el id [" + id + "] no existe")
+			 );
 	}//getReaccion
 
-	public Reaccion deleteReaccion(int id) {
-		ReaccionRequest reaccionToRemove = null;
-		for(ReaccionRequest reaccion : listaReacciones) {
-			if (reaccion.getId() == id) {
-				reaccionToRemove = reaccion;
-				break;
-			}
-		}//if
-		if (reaccionToRemove != null) {
-			listaReacciones.remove(reaccionToRemove);
+	public ReaccionRequest deleteReaccion(Long id) {
+		Optional<ReaccionRequest> reaccionOptional = Optional.empty();
+		
+		if (reaccionOptional.isPresent()) {
+			ReaccionRequest tmpReaccion = reaccionOptional.get();
+			reaccionRepository.deleteById(id);
+			return tmpReaccion;
+		} else {
+			return null;
 		}
-		return reaccionToRemove;
 	}//deleteReaccion
 
-	public Reaccion addReaccion(ReaccionRequest reaccionRequest) {
-		for(ReaccionRequest reaccion : listaReacciones) {
-			if (reaccion.getUsuarioId().equals(reaccionRequest.getUsuarioId())) {
-				return null;
-			}
-		}//if ! existe
-		listaReacciones.add(reaccionRequest);
-		return reaccioneRequest;
-		
+	public ReaccionRequest addReaccion(ReaccionRequest reaccionRequest) {
+		return reaccionRequest;
 	}//addReaccion
 
-<<<<<<< HEAD
+	public Reaccion updateReaccion(Long id, String reaccion) {
+       return null;		
+	}//updateReaccion
 	
 }//classReaccionService
-=======
-    public Reaccion addReaction(Reaccion reaccion) {
-    	Reaccion tmpReaction=null;
-		boolean existe=false;
-		if(! existe) {
-			listaReacciones.add(reaccion);
-			tmpReaction=reaccion;
-		}// if ! existe
-		return tmpReaction;
-    }//addReactiontype
 
-    public Reaccion updateReaction(int id, int tipoReaccionId) {
-        Reaccion tmpReaccion = null;
-        return tmpReaccion;
-    }//updateReaction
->>>>>>> d732f6ecc410adce5acedfa14a1623be0102be85
+  
+
 
 
 

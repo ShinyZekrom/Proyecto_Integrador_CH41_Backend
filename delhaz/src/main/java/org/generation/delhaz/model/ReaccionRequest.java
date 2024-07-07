@@ -8,19 +8,13 @@ public class ReaccionRequest {
     private TipoReaccion tipoReaccion;
     private LocalDateTime fechaReaccion;
 
-    // Constructor
-    public ReaccionRequest(Long usuarioId, Long publicacionId, TipoReaccion tipoReaccion, LocalDateTime fechaReaccion) {
-        this.usuarioId = usuarioId;
+
+	public ReaccionRequest(long usuarioId, long publicacionId, TipoReaccion tipoReaccion) {
+		this.usuarioId = usuarioId;
         this.publicacionId = publicacionId;
         this.tipoReaccion = tipoReaccion;
-        this.fechaReaccion = fechaReaccion;
-    }
-    
-    
-	public ReaccionRequest() {
-		super();
-	}//constructor vacío
-
+        this.fechaReaccion = LocalDateTime.now();
+	}//constructor
 
 	// Getters y Setters
     public Long getUsuarioId() {

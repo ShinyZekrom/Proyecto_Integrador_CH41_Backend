@@ -1,5 +1,6 @@
 package org.generation.delhaz.controller;
 
+
 import org.generation.delhaz.model.Reaccion;
 import org.generation.delhaz.model.ReaccionRequest;
 import org.generation.delhaz.service.ReaccionService;
@@ -22,28 +23,34 @@ public class ReaccionController {
     }//constructor
 
     
-    @GetMapping
+    @GetMapping // http://localhost:8080/api/reacciones/
     public List<Reaccion> getReacciones() {
         return reaccionService.getAllReacciones();
     }//getReaccion
 
     
-    @GetMapping(path="{reaccionid}") // http://localhost:3306/api/reacciones
-    public Reaccion getReaccion(@PathVariable int id) {
+    @GetMapping(path="{reaccionid}") // http://localhost:8080/api/reacciones/1
+    public Reaccion getReaccion(@PathVariable Long id) {
         return reaccionService.getReaccion(id);
     }//getReaccion
     
     
-    @DeleteMapping(path="{reaccionid}")// http://localhost:3306/api/reacciones/1
-    public Reaccion deleteReaccion(@PathVariable("reacionId") int id) {
+    @DeleteMapping(path="{reaccionid}")// http://localhost:8080/api/reacciones/1
+    public ReaccionRequest deleteReaccion(@PathVariable("reacionId") Long id) {
         return reaccionService.deleteReaccion(id);
     }//deleteReaccion
 
     
-    @PostMapping //localhost:3306/api/reacciones
-    public Reaccion addReaccion(@RequestBody ReaccionRequest reaccionRequest) {
+    @PostMapping //localhost:8080/api/reacciones/
+    public ReaccionRequest addReaccion(@RequestBody ReaccionRequest reaccionRequest) {
         return reaccionService.addReaccion(reaccionRequest);
     }//addReaccion
-        
+    
+    @PutMapping(path="{reaccionid}")// http://localhost:8080/api/reacciones/1
+    	public Reaccion updateReaccion(@PathVariable("usuarioId") Long id,
+	           @RequestParam(required = false) int usuario_id,
+	           @RequestParam(required = false) String reaccion) {
+	        return reaccionService.updateReaccion(id, reaccion);
+    }//updateReaccion 
 }//ReaccionController
 
