@@ -2,37 +2,49 @@ package org.generation.delhaz.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="usuarios")
 public class Usuario {
-	
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", unique=true, nullable=false)
+	private Long id;
+	@Column(nullable=false)
 	private String nombre;
+	@Column(nullable=false)
 	private String username;
+	@Column(nullable=false)
 	private String email;
+	@Column(nullable=false)
 	private String password;
+	@Column(nullable=false)
 	private LocalDateTime fechaRegistro;
+	@Column(nullable=false)
 	private String fotoPerfil;
-	private static int total=0;
 	
 	//1. Constructor
-	public Usuario(String nombre, String username, String email, String password,
-			LocalDateTime fechaRegistro, String fotoPerfil) {
-		super();
+	public Usuario(Long id, String nombre, String username, String email, String password, LocalDateTime fechaRegistro,
+			String fotoPerfil) {
+		this.id = id;
 		this.nombre = nombre;
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.fechaRegistro = LocalDateTime.now();
+		this.fechaRegistro = fechaRegistro;
 		this.fotoPerfil = fotoPerfil;
-		Usuario.total++;
-		this.id = total;
-		
 	}//Constructor
-	
+
+
+
 	//2. constructor vacio
-	public Usuario() {
-		Usuario.total++;
-		this.id = total;
-	}// constructor vacio
+	public Usuario() {}// constructor vacio
 
 	
 	//3. Getters and Setters
@@ -84,7 +96,7 @@ public class Usuario {
 		this.fotoPerfil = fotoPerfil;
 	}//setFotoPerfil
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}//getId
 

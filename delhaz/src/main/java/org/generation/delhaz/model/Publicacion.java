@@ -2,27 +2,41 @@ package org.generation.delhaz.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "publicacion")
 public class Publicacion {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", unique=true, nullable=false)
+	private Long id;
+	@Column(nullable=false)
 	private String usuario;
+	@Column(nullable=false)
 	private String descripcion;
+	@Column(nullable=false)
 	private LocalDateTime fechaPublicacion;
+	@Column(nullable=false)
 	private String contenido;
-	private int  id; 
-	private static int  total=0;
+
 	
 	public Publicacion(String usuario, String descripcion, LocalDateTime fechaPublicacion, String contenido) {
 		this.usuario = usuario;
 		this.descripcion = descripcion;
 		this.fechaPublicacion = fechaPublicacion;
 		this.contenido = contenido;
-		Publicacion.total++;
-		this.id=total;
+		
 	}//cosntructor 
 	
 	public Publicacion() {
-		Publicacion.total++;
-		this.id=total;
+	
 	}//constructor vacio 
 
 	public String getUsuario() {
@@ -58,7 +72,7 @@ public class Publicacion {
 	}//setContenido Multimedia 
 	
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}//getId
 

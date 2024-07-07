@@ -1,93 +1,71 @@
 package org.generation.delhaz.service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.generation.delhaz.model.Publicacion;
+import org.generation.delhaz.repository.PublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PublicacionService {
-	public final ArrayList<Publicacion> lista =new ArrayList<Publicacion>();
+	public final PublicacionRepository publicacionRepository;
 	
 	@Autowired
-	public PublicacionService() {
-		lista.add(new Publicacion(
-						"karen_garcia", 
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-						LocalDateTime.now(), 
-						"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719523118/photo-1718114885158-a3157f5fc443_nup4mp.jpg"));
-		lista.add(new Publicacion(
-				"luis_mald", 
-				"Phasellus vehicula justo eget diam posuere sollicitudin.",
-				LocalDateTime.now(),				
-				"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719518755/98_t149wy.jpg"));
-		lista.add(new Publicacion(
-                "carol_hrdz",
-                 "Integer vitae justo eget magna fermentum iaculis eu non diam.",
-                 LocalDateTime.now(),
-                 "https://res.cloudinary.com/dtlbnmahy/image/upload/v1719523146/conoce-5-lenguajes-de-programacion-basicos_s4lbwy.jpg"));
-		lista.add(new Publicacion(
-				"alan_trejo", 
-				"Sed do eiusmod tempor.",
-				LocalDateTime.now(),
-				"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719523691/images_1_bovq12.jpg"));
-		lista.add(new Publicacion(
-				"gibran_12di", 
-				"Curabitur pretium tincidunt lacus. Nulla gravida orci.",
-				LocalDateTime.now(),
-				"https://res.cloudinary.com/dtlbnmahy/image/upload/v1719523749/images_tlbyg9.jpg"));
-	}//PublciacionService constructor 
+	public PublicacionService(PublicacionRepository publicacionRepository) {
+	    this.publicacionRepository = publicacionRepository;
+	}//cosntructor PublciacionService constructor 
 	
-	public ArrayList<Publicacion>getAllPublicaciones(){
-		return lista;
+	
+	public List<Publicacion>getAllPublicaciones(){
+		return publicacionRepository.findAll();
 	}//getAllPublicaciones
 
-	public Publicacion getPublicacion(int id) {
-		Publicacion tmpPub=null;
-		for (Publicacion publicacion : lista) {
-			if(publicacion.getId()==id) {
-				tmpPub=publicacion;
-				break;
-			}//if
-		}//foreach
-		return tmpPub;
+	public Publicacion getPublicacion(Long id) {
+		return publicacionRepository.findById(id).orElseThrow(
+	            () -> new IllegalArgumentException("La publicación con el id [" + id + "] no existe")
+	        );
 	}//getPublicacion
 
-	public Publicacion deletePublicacion(int id) {
-		Publicacion tmpPub=null;
-		for (Publicacion publicacion : lista) {
-			if(publicacion.getId()==id) {
-				tmpPub=publicacion;
-				lista.remove(lista.indexOf(publicacion));
-				break;
-			}//if
-		}//foreach	
-		return tmpPub;
+	public Publicacion deletePublicacion(Long id) {
+		Publicacion tmpPub = null;
+        if (publicacionRepository.existsById(id)) {
+            tmpPub = publicacionRepository.findById(id).get();
+            publicacionRepository.deleteById(id);
+        }//if
+        return tmpPub;
 	}//deletePublicacion
 
 	public Publicacion addPublicacion(Publicacion publicacion) {
-		lista.add(publicacion);
-		return publicacion;
-	}//addProducto
+	    Optional<Publicacion> tmpPub = publicacionRepository.findByUsuario(publicacion.getUsuario());
+	    if (tmpPub.isEmpty()) {
+	        return publicacionRepository.save(publicacion);
+	    } else {
+	        System.out.println("La publicación del usuario [ " + publicacion.getUsuario() + " ] ya existe ");
+	        return null;
+	    }//if
 
-	public Publicacion updatePublicacion(int id, String usuario, String descripcion, LocalDateTime fechaPublicacion,
-			String contenido) {
-		Publicacion tmpPub=null;
-		for (Publicacion publicacion : lista) {
-			if (publicacion.getId() == id) {
-				if (usuario != null)publicacion.setUsuario(usuario);
-				if (descripcion != null)publicacion.setDescripcion(descripcion);
-				if (descripcion != null)publicacion.setDescripcion(descripcion);
-				if (fechaPublicacion!= null)publicacion.setFechaPublicacion(fechaPublicacion);
-				if (contenido!= null)publicacion.setContenido(contenido);
-				tmpPub = publicacion;
-				break;	
-			}//if			
-		}//foreach			
+	}//addPublicacion
+
+    //Solo permite el update la descripción y el contenido de la publicación
+	public Publicacion updatePublicacion(Long id, String descripcion, String contenido) {
+		Publicacion tmpPub = null;
+		if (publicacionRepository.existsById(id)) {
+			Publicacion publicacion = publicacionRepository.findById(id).orElse(null);
+			if (descripcion != null)
+				publicacion.setDescripcion(descripcion);
+			if (contenido != null)
+				publicacion.setContenido(contenido);
+			publicacionRepository.save(publicacion);
+			tmpPub = publicacion;
+		} // if
 		return tmpPub;
-	}//update
+
+	}// updatePublicacion
+
+	
 	
 	
 }//class PublicacionService 
