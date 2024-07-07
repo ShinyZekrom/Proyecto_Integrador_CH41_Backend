@@ -31,7 +31,8 @@ public class PublicacionesController {
 		return publicacionService.getAllPublicaciones();
 	}//getPublicaciones 
 	
-	@GetMapping(path="{pubId}")
+
+	@GetMapping(path="{pubId}")//http://localhost:8080/api/publicaciones/1
 	public Publicacion getPublicacion(@PathVariable("pubId") Long id) {
 		return publicacionService.getPublicacion(id);
 	}//getPublicacion

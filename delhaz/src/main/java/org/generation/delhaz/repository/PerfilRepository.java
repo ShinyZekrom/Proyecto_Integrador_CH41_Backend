@@ -10,3 +10,4 @@ import org.springframework.stereotype.Repository;
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
 	Optional<Perfil>findByDescripcion(String descripcion);
 }//Interface PerfilReposirory
+
