@@ -7,7 +7,9 @@ import org.generation.delhaz.service.PerfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,4 +40,9 @@ public class PerfilController {
 	        return perfilService.updateProfile(id, descripcion);
 	    }//updateProfile
 	
+	 @PostMapping //http://localhost:8080/api/perfiles/
+		public Perfil addPerfil(@RequestBody Perfil perfil) {
+			return perfilService.addProfile(perfil);
+		}//addPerfil
+	 
 }//Class PerfilController

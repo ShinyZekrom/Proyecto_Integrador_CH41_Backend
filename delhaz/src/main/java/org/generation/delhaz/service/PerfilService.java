@@ -1,6 +1,7 @@
 package org.generation.delhaz.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.generation.delhaz.model.Perfil;
 import org.generation.delhaz.repository.PerfilRepository;
@@ -37,5 +38,14 @@ public class PerfilService {
 		return tmpProfile;
 	}//updateProfile
 
+	public Perfil addProfile(Perfil perfil) {
+		Optional<Perfil> tmpProfile = perfilRepository.findById(perfil.getUsuario_id());
+		if(tmpProfile.isEmpty()) {
+			return perfilRepository.save(perfil);
+		}else {
+			System.out.println("El perfil con el usuario_id [" + perfil.getUsuario_id() + "] ya existe");
+			return null;
+		}//else		
+	}//addProfile
 	
 }//Class PerfilService
