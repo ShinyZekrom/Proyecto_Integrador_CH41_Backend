@@ -17,10 +17,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 
-
 public class JwtFilter extends GenericFilterBean{
 
-	public static String secret = "D3lhAzTr4v3L1sT1r3dAndN33dt0S133p@asdf";
+	public static String secret="D31HA5TrAv15L123$#";
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -28,10 +27,10 @@ public class JwtFilter extends GenericFilterBean{
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String authHeader =  httpServletRequest.getHeader("authorization");
 		if (  (("POST".equals(httpServletRequest.getMethod())) && 
-				(! httpServletRequest.getRequestURI().contains("/api/usuarios/") )  )  
+				(! httpServletRequest.getRequestURI().contains("/api/tiporeacciones/") )  )  
 				||
 				( ("GET".equals(httpServletRequest.getMethod())) && 
-						(! httpServletRequest.getRequestURI().contains("/api/publicaciones/") )  ) ||
+						(! httpServletRequest.getRequestURI().contains("/api/usuarios/") )  ) ||
 			  ("PUT".equals(httpServletRequest.getMethod())) ||
 			  ("DELETE".equals(httpServletRequest.getMethod()))
 			) { 
@@ -53,7 +52,7 @@ public class JwtFilter extends GenericFilterBean{
 					}//catch 
 			}// if methods
 			chain.doFilter(request, response);
+		
 	}//doFilter
 
-	
-}//class JwtFilter
+}//JWT Filter
