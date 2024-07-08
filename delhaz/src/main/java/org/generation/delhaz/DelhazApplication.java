@@ -18,7 +18,7 @@ public class DelhazApplication {
 		FilterRegistrationBean<JwtFilter> registrationBean =
 				new FilterRegistrationBean<JwtFilter>();
 		registrationBean.setFilter(new JwtFilter());
-		registrationBean.addUrlPatterns("/api/tiporeaccion/");
+		registrationBean.addUrlPatterns("/api/tiporeacciones/");
 		registrationBean.addUrlPatterns("/api/usuarios/");
 		return registrationBean;
 	}//jwtFilter
