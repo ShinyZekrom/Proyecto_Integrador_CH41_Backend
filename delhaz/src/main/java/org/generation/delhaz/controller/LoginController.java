@@ -6,8 +6,8 @@ import java.util.Date;
 import javax.servlet.ServletException;
 
 import org.generation.delhaz.config.JwtFilter;
+import org.generation.delhaz.dto.Login;
 import org.generation.delhaz.dto.Token;
-import org.generation.delhaz.model.Usuario;
 import org.generation.delhaz.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,14 +29,14 @@ public class LoginController {
 		}//constructor
 	
 	@PostMapping
-	public Token loginUser(@RequestBody Usuario usuario) 
+	public Token loginUser(@RequestBody Login login) 
 								throws ServletException {
-		if (usuarioService.validateUser(usuario)) {
-			System.out.println("Usuario Valido " + usuario.getEmail());
-			return new Token(generateToken(usuario.getEmail()));
+		if (usuarioService.validateUser(login)) {
+			System.out.println("Usuario Valido " + login.getEmail());
+			return new Token(generateToken(login.getEmail()));
 		}//if validateUser
 		throw new ServletException("Nombre de usuario o contraseña incorrectos ["
-				+ usuario.getEmail());
+				+ login.getEmail() + "]");
 	}//loginUser
 
 	private String generateToken(String username) {

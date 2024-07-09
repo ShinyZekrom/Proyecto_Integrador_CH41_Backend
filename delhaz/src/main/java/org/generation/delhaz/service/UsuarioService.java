@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.generation.delhaz.dto.ChangePassword;
+import org.generation.delhaz.dto.Login;
 import org.generation.delhaz.model.Usuario;
 import org.generation.delhaz.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +75,12 @@ public class UsuarioService {
 		return tmpUser;
 	}//updateUser
 
-	public boolean validateUser(Usuario usuario) {
+	public boolean validateUser(Login login) {
 		Optional <Usuario> userByEmail =
-						usuarioRepository.findByEmail(usuario.getEmail());
+						usuarioRepository.findByEmail(login.getEmail());
 		if(userByEmail.isPresent()) {
 			Usuario tmpUser =userByEmail.get();
-			if(encoder.matches(usuario.getPassword(), tmpUser.getPassword())) {
+			if(encoder.matches(login.getPassword(), tmpUser.getPassword())) {
 				return true;
 			}//if encoder.matches
 		}//if isPresent()
