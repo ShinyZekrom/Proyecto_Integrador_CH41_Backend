@@ -1,6 +1,6 @@
 package org.generation.delhaz;
 
-<<<<<<< HEAD
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.generation.delhaz.model.Perfil;
-=======
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -42,24 +42,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDateTime;
 
 import org.generation.delhaz.model.Usuario;
->>>>>>> a545250f77c48d81f46ba797526986d4e87732e4
+
 
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.hamcrest.Matchers.containsString;
-<<<<<<< HEAD
 
-=======
->>>>>>> a545250f77c48d81f46ba797526986d4e87732e4
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class DelhazApplicationTests {
-<<<<<<< HEAD
+
 	@Autowired
-	private MockMvc mockMvc;
+	private MockMvc mockMvc1;
 	
-	private final String token = "Bearer: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsdWlzNEBob3RtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzIwNDY4MjkxLCJleHAiOjE3MjA1MDQyOTF9.4DSPhGFpf9ND4UpNxJfKtwO9d9-G8SBPFdtscj_YRS0";
+	private final String token1 = "Bearer: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsdWlzNEBob3RtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzIwNDY4MjkxLCJleHAiOjE3MjA1MDQyOTF9.4DSPhGFpf9ND4UpNxJfKtwO9d9-G8SBPFdtscj_YRS0";
 	
 	@Test
 	@DisplayName("Se prueba el GET del endpoint http://localhost:8080/api/perfiles/")
@@ -78,7 +75,7 @@ class DelhazApplicationTests {
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().string(containsString("Artista visual")));
-=======
+
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -100,7 +97,7 @@ class DelhazApplicationTests {
 	@Test
 	@DisplayName("Se prueba el GET del endpoint http://localhost:8080/api/usuarios/1")
 	void pruebaGET() throws Exception{
-		this.mockMvc.perform(get("/api/usuarios/1") )
+		this.mockMvc1.perform(get("/api/usuarios/1") )
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect( content().string(containsString("maldonado.luis.iqm@gmail.com"))
@@ -112,8 +109,8 @@ class DelhazApplicationTests {
 	@DisplayName("Se prueba el DELETE del endpoint http://localhost:8080/api/usuarios/2")
 	@Disabled("Probado una vez, deshabilitado porque el registro ya ha sido borrado")
 	void pruebaDELETE() throws Exception{
-		this.mockMvc.perform( delete("/api/usuarios/2")
-				.header("Authorization", token) 
+		this.mockMvc1.perform( delete("/api/usuarios/2")
+				.header("Authorization", token1) 
 				)
 		.andDo(print())
 		.andExpect(status().isOk())
@@ -133,10 +130,10 @@ class DelhazApplicationTests {
 		user.setFechaRegistro(LocalDateTime.now());
 		user.setFotoPerfil("jasbdkajsbd.jpeg");
 		
-		this.mockMvc.perform(post("/api/usuarios/")
+		this.mockMvc1.perform(post("/api/usuarios/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content( asJsonString(user))
-				.header("Authorization", token) 
+				.header("Authorization", token1) 
 				)
 		.andDo(print())
 		.andExpect(status().isOk())
@@ -147,25 +144,25 @@ class DelhazApplicationTests {
 	@Test
 	@DisplayName("Se prueba el PUT para modificar una publicación id 1 ")
 	void pruebaPUT() throws Exception{
-		this.mockMvc.perform( put("/api/publicaciones/1")
+		this.mockMvc1.perform( put("/api/publicaciones/1")
 				.queryParam("descripcion", "Probando metodos")
-				.header("Authorizaton", token)
+				.header("Authorizaton", token1)
 				)
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect( content().string(containsString("Probando metodos"))
 				);
 	}//prueba PUT
->>>>>>> a545250f77c48d81f46ba797526986d4e87732e4
+
 
 	}//pruebaGET
 	
 	@Test
 	@DisplayName("Se prueba modificar el Id 3")
 	void pruebaPUT() throws Exception {
-		this.mockMvc.perform(put("/api/perfiles/3")
+		this.mockMvc1.perform(put("/api/perfiles/3")
 				.queryParam("descripcion", "Amante de viajar")
-				.header("Authorization", token )
+				.header("Authorization", token1 )
 				)
 		.andDo(print())
 		.andExpect(status().isOk())
@@ -180,10 +177,10 @@ class DelhazApplicationTests {
 		p.setUsuario_id((long) 12);
 		p.setDescripcion("Me apasiona viajar");
 		
-		this.mockMvc.perform(post("/api/perfiles/")
+		this.mockMvc1.perform(post("/api/perfiles/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(p))
-				.header("Authorization", token )
+				.header("Authorization", token1 )
 				)
 		.andDo(print())
 		.andExpect(status().isOk())

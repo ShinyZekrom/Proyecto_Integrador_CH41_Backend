@@ -2,13 +2,15 @@ package org.generation.delhaz.service;
 
 
 import java.util.List;
-import java.util.Optional;
+
 
 import org.generation.delhaz.model.Publicacion;
 import org.generation.delhaz.repository.PublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin(origins="http://127.0.0.1:5504")
 @Service
 public class PublicacionService {
 	public final PublicacionRepository publicacionRepository;
@@ -38,16 +40,11 @@ public class PublicacionService {
         return tmpPub;
 	}//deletePublicacion
 
+	
 	public Publicacion addPublicacion(Publicacion publicacion) {
-	    Optional<Publicacion> tmpPub = publicacionRepository.findByUsuario(publicacion.getUsuario());
-	    if (tmpPub.isEmpty()) {
-	        return publicacionRepository.save(publicacion);
-	    } else {
-	        System.out.println("La publicación del usuario [ " + publicacion.getUsuario() + " ] ya existe ");
-	        return null;
-	    }//if
-
-	}//addPublicacion
+		    return publicacionRepository.save(publicacion);
+		}//addPublicacion
+	
 
     //Solo permite el update la descripción y el contenido de la publicación
 	public Publicacion updatePublicacion(Long id, String descripcion, String contenido) {
