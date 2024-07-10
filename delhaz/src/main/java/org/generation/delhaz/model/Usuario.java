@@ -18,7 +18,7 @@ public class Usuario {
 	private Long id;
 	@Column(nullable=false)
 	private String nombre;
-	@Column(nullable=false)
+	@Column(nullable=false, name = "username")
 	private String username;
 	@Column(nullable=false)
 	private String email;
@@ -26,7 +26,7 @@ public class Usuario {
 	private String password;
 	@Column(nullable=false)
 	private LocalDateTime fechaRegistro;
-	@Column(nullable=false)
+	@Column(nullable=false, name = "foto_perfil")
 	private String fotoPerfil;
 	@Column(nullable=false)
 	private String telefono;

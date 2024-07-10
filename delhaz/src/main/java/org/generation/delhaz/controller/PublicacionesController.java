@@ -3,9 +3,11 @@ package org.generation.delhaz.controller;
 //import java.time.LocalDateTime;
 import java.util.List;
 
+import org.generation.delhaz.dto.PublicacionDTO;
 import org.generation.delhaz.model.Publicacion;
 import org.generation.delhaz.service.PublicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "http://127.0.0.1:5504")
 @RequestMapping(path="/api/publicaciones/")
 public class PublicacionesController {
 	private final PublicacionService publicacionService;
@@ -27,8 +30,8 @@ public class PublicacionesController {
 	}//constructor
 	
 	@GetMapping
-	public List<Publicacion> getPublicaciones() {
-		return publicacionService.getAllPublicaciones();
+	public List<PublicacionDTO> getPublicaciones() {
+		return publicacionService.obtenerPublicaciones();
 	}//getPublicaciones 
 	
 
