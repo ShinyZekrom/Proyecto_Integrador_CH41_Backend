@@ -2,8 +2,9 @@ package org.generation.delhaz.service;
 
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.generation.delhaz.dto.PublicacionDTO;
 import org.generation.delhaz.model.Publicacion;
 import org.generation.delhaz.repository.PublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,11 @@ public class PublicacionService {
 	}//cosntructor PublciacionService constructor 
 	
 	
-	public List<Publicacion>getAllPublicaciones(){
-		return publicacionRepository.findAll();
+	public List<PublicacionDTO> obtenerPublicaciones() {
+	    List<Publicacion> publicaciones = publicacionRepository.findAll();
+	    return publicaciones.stream()
+	        .map(this::convertirADTO)
+	        .collect(Collectors.toList());
 	}//getAllPublicaciones
 
 	public Publicacion getPublicacion(Long id) {
@@ -39,14 +43,7 @@ public class PublicacionService {
 	}//deletePublicacion
 
 	public Publicacion addPublicacion(Publicacion publicacion) {
-	    Optional<Publicacion> tmpPub = publicacionRepository.findByUsuario(publicacion.getUsuario());
-	    if (tmpPub.isEmpty()) {
-	        return publicacionRepository.save(publicacion);
-	    } else {
-	        System.out.println("La publicación del usuario [ " + publicacion.getUsuario() + " ] ya existe ");
-	        return null;
-	    }//if
-
+	    return publicacionRepository.save(publicacion);
 	}//addPublicacion
 
     //Solo permite el update la descripción y el contenido de la publicación
@@ -65,7 +62,15 @@ public class PublicacionService {
 
 	}// updatePublicacion
 
-	
-	
+	private PublicacionDTO convertirADTO(Publicacion publicacion) {
+	    PublicacionDTO dto = new PublicacionDTO();
+	    dto.setId(publicacion.getId());
+	    dto.setDescripcion(publicacion.getDescripcion());
+	    dto.setFechaPublicacion(publicacion.getFechaPublicacion());
+	    dto.setContenido(publicacion.getContenido());
+	    dto.setUsuarioUsername(publicacion.getUsuario().getUsername());
+	    dto.setUsuarioFotoPerfil(publicacion.getUsuario().getFotoPerfil());
+	    return dto;
+	}
 	
 }//class PublicacionService 
