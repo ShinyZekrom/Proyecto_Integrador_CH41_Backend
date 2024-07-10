@@ -82,6 +82,7 @@ class DelhazApplicationTests {
 		user.setEmail("luis.maldonado.iqm@gmail.com");
 		user.setFechaRegistro(LocalDateTime.now());
 		user.setFotoPerfil("jasbdkajsbd.jpeg");
+		user.setTelefono("5554455159");
 		
 		this.mockMvc.perform(post("/api/usuarios/")
 				.contentType(MediaType.APPLICATION_JSON)
