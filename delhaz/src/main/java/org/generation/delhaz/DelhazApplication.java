@@ -19,6 +19,7 @@ public class DelhazApplication {
 				new FilterRegistrationBean<JwtFilter>();
 		registrationBean.setFilter(new JwtFilter());
 		registrationBean.addUrlPatterns("/api/usuarios/");
+		registrationBean.addUrlPatterns("/api/login/");
 		return registrationBean;
 	}//jwtFilter
 	//filtramos donde se requiere el uso del token 
