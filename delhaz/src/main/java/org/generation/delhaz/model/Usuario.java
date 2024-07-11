@@ -1,13 +1,18 @@
 package org.generation.delhaz.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="usuarios")
@@ -30,6 +35,10 @@ public class Usuario {
 	private String fotoPerfil;
 	@Column(nullable=false)
 	private String telefono;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Publicacion> publicaciones;
+
 	
 	//1. Constructor
 	public Usuario(Long id, String nombre, String username, String email, String password, LocalDateTime fechaRegistro,
@@ -42,6 +51,7 @@ public class Usuario {
 		this.fechaRegistro = fechaRegistro;
 		this.fotoPerfil = fotoPerfil;
 		this.telefono = telefono; 
+
 	}//Constructor
 
 	//2. constructor vacio
@@ -108,6 +118,14 @@ public class Usuario {
 	public Long getId() {
 		return id;
 	}//getId
+	
+    public List<Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public void setPublicaciones(List<Publicacion> publicaciones) {
+        this.publicaciones = publicaciones;
+    }
 
 	//4. toString
 	@Override
