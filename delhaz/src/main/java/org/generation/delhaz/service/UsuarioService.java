@@ -9,6 +9,7 @@ import org.generation.delhaz.model.Usuario;
 import org.generation.delhaz.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
@@ -91,6 +92,11 @@ public class UsuarioService {
 	    return usuarioRepository.findById(usuarioId)
 	        .orElseThrow(() -> new IllegalArgumentException("Usuario con id " + usuarioId + " no encontrado"));
 	}
+
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
+    }
 
 
 
