@@ -39,14 +39,7 @@ public class PublicacionService {
 	}//deletePublicacion
 
 	public Publicacion addPublicacion(Publicacion publicacion) {
-	    Optional<Publicacion> tmpPub = publicacionRepository.findByUsuario(publicacion.getUsuario());
-	    if (tmpPub.isEmpty()) {
-	        return publicacionRepository.save(publicacion);
-	    } else {
-	        System.out.println("La publicación del usuario [ " + publicacion.getUsuario() + " ] ya existe ");
-	        return null;
-	    }//if
-
+		return publicacionRepository.save(publicacion);
 	}//addPublicacion
 
     //Solo permite el update la descripción y el contenido de la publicación
