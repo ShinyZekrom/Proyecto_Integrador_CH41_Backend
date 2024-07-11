@@ -36,7 +36,6 @@ public class Publicacion {
 	private Usuario usuario;
 	
 
-	
 	public Publicacion(Usuario usuario, String descripcion, LocalDateTime fechaPublicacion, String contenido) {
 		this.usuario = usuario;
 		this.descripcion = descripcion;
@@ -86,6 +85,13 @@ public class Publicacion {
 		return id;
 	}//getId
 
+	public String getUsername() {
+        return usuario != null ? usuario.getUsername() : null;
+    }
+
+    public String getFotoPerfil() {
+        return usuario != null ? usuario.getFotoPerfil() : null;
+    }
 	
 	@Override
 	public String toString() {
