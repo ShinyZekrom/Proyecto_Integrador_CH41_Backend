@@ -2,20 +2,25 @@ package org.generation.delhaz.service;
 
 
 import java.util.List;
-import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.generation.delhaz.model.Publicacion;
+import org.generation.delhaz.model.Usuario;
 import org.generation.delhaz.repository.PublicacionRepository;
+import org.generation.delhaz.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PublicacionService {
 	public final PublicacionRepository publicacionRepository;
+	public final UsuarioRepository usuarioRepository;
 	
 	@Autowired
-	public PublicacionService(PublicacionRepository publicacionRepository) {
+	public PublicacionService(PublicacionRepository publicacionRepository, UsuarioRepository usuarioRepository) {
 	    this.publicacionRepository = publicacionRepository;
+		this.usuarioRepository = usuarioRepository;
 	}//cosntructor PublciacionService constructor 
 	
 	
@@ -38,15 +43,18 @@ public class PublicacionService {
         return tmpPub;
 	}//deletePublicacion
 
-	public Publicacion addPublicacion(Publicacion publicacion) {
-	    Optional<Publicacion> tmpPub = publicacionRepository.findByUsuario(publicacion.getUsuario());
-	    if (tmpPub.isEmpty()) {
-	        return publicacionRepository.save(publicacion);
-	    } else {
-	        System.out.println("La publicación del usuario [ " + publicacion.getUsuario() + " ] ya existe ");
-	        return null;
-	    }//if
-
+	@Transactional
+		public Publicacion addPublicacion(Publicacion publicacion) {
+		    System.out.println("Adding publication: " + publicacion);
+		    System.out.println("Usuario: " + publicacion.getUsuario());
+		if (publicacion.getUsuario() == null) {
+	        throw new IllegalArgumentException("La publicación debe tener un usuario asociado");
+	    }
+	    // Asegúrate de que el usuario existe en la base de datos
+	    Usuario usuario = usuarioRepository.findById(publicacion.getUsuario().getId())
+	        .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+	    publicacion.setUsuario(usuario);
+	    return publicacionRepository.save(publicacion);
 	}//addPublicacion
 
     //Solo permite el update la descripción y el contenido de la publicación

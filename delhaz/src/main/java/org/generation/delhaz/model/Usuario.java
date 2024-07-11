@@ -1,13 +1,18 @@
 package org.generation.delhaz.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="usuarios")
@@ -28,10 +33,15 @@ public class Usuario {
 	private LocalDateTime fechaRegistro;
 	@Column(nullable=false)
 	private String fotoPerfil;
+	@Column(nullable=false)
+	private String telefono;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Publicacion> publicaciones;
 	
 	//1. Constructor
 	public Usuario(Long id, String nombre, String username, String email, String password, LocalDateTime fechaRegistro,
-			String fotoPerfil) {
+			String fotoPerfil, String telefono) {
 		this.id = id;
 		this.nombre = nombre;
 		this.username = username;
@@ -39,9 +49,9 @@ public class Usuario {
 		this.password = password;
 		this.fechaRegistro = fechaRegistro;
 		this.fotoPerfil = fotoPerfil;
+		this.telefono = telefono;
+		
 	}//Constructor
-
-
 
 	//2. constructor vacio
 	public Usuario() {}// constructor vacio
@@ -95,24 +105,34 @@ public class Usuario {
 	public void setFotoPerfil(String fotoPerfil) {
 		this.fotoPerfil = fotoPerfil;
 	}//setFotoPerfil
+	
+	public String getTelefono() {
+		return telefono;
+	}//getFotoPerfil
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}//setFotoPerfil
 
 	public Long getId() {
 		return id;
 	}//getId
+	
+    public List<Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
 
-	
+    public void setPublicaciones(List<Publicacion> publicaciones) {
+        this.publicaciones = publicaciones;
+    }
+
 	//4. toString
-	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
-				+ ", contraseña=" + password + ", fecha_registro=" + fechaRegistro + ", foto_perfil=" + fotoPerfil
-				+ "]";
+				+ ", password=" + password + ", fechaRegistro=" + fechaRegistro + ", fotoPerfil=" + fotoPerfil
+				+ ", telefono=" + telefono + "]";
 	}//toString
-	
-	
-	
-	
 	
 	
 }

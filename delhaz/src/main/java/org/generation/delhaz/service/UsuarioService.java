@@ -87,4 +87,11 @@ public class UsuarioService {
 		return false;
 	}//validateUser
 
+	public Usuario getUsuarioById(Long usuarioId) {
+	    return usuarioRepository.findById(usuarioId)
+	        .orElseThrow(() -> new IllegalArgumentException("Usuario con id " + usuarioId + " no encontrado"));
+	}
+
+
+
 }//class UsuarioService
