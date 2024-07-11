@@ -2,29 +2,30 @@ package org.generation.delhaz.service;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.generation.delhaz.dto.PublicacionDTO;
+import javax.transaction.Transactional;
+
 import org.generation.delhaz.model.Publicacion;
+import org.generation.delhaz.model.Usuario;
 import org.generation.delhaz.repository.PublicacionRepository;
+import org.generation.delhaz.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PublicacionService {
 	public final PublicacionRepository publicacionRepository;
+	public final UsuarioRepository usuarioRepository;
 	
 	@Autowired
-	public PublicacionService(PublicacionRepository publicacionRepository) {
+	public PublicacionService(PublicacionRepository publicacionRepository, UsuarioRepository usuarioRepository) {
 	    this.publicacionRepository = publicacionRepository;
+		this.usuarioRepository = usuarioRepository;
 	}//cosntructor PublciacionService constructor 
 	
 	
-	public List<PublicacionDTO> obtenerPublicaciones() {
-	    List<Publicacion> publicaciones = publicacionRepository.findAll();
-	    return publicaciones.stream()
-	        .map(this::convertirADTO)
-	        .collect(Collectors.toList());
+	public List<Publicacion>getAllPublicaciones(){
+		return publicacionRepository.findAll();
 	}//getAllPublicaciones
 
 	public Publicacion getPublicacion(Long id) {
@@ -42,7 +43,17 @@ public class PublicacionService {
         return tmpPub;
 	}//deletePublicacion
 
-	public Publicacion addPublicacion(Publicacion publicacion) {
+	@Transactional
+		public Publicacion addPublicacion(Publicacion publicacion) {
+		    System.out.println("Adding publication: " + publicacion);
+		    System.out.println("Usuario: " + publicacion.getUsuario());
+		if (publicacion.getUsuario() == null) {
+	        throw new IllegalArgumentException("La publicación debe tener un usuario asociado");
+	    }
+	    // Asegúrate de que el usuario existe en la base de datos
+	    Usuario usuario = usuarioRepository.findById(publicacion.getUsuario().getId())
+	        .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+	    publicacion.setUsuario(usuario);
 	    return publicacionRepository.save(publicacion);
 	}//addPublicacion
 
@@ -62,17 +73,4 @@ public class PublicacionService {
 
 	}// updatePublicacion
 
-	private PublicacionDTO convertirADTO(Publicacion publicacion) {
-	    PublicacionDTO dto = new PublicacionDTO();
-	    dto.setId(publicacion.getId());
-	    dto.setDescripcion(publicacion.getDescripcion());
-	    dto.setFechaPublicacion(publicacion.getFechaPublicacion());
-	    dto.setContenido(publicacion.getContenido());
-	    dto.setUsuarioUsername(publicacion.getUsuario().getUsername());
-	    dto.setUsuarioFotoPerfil(publicacion.getUsuario().getFotoPerfil());
-	    return dto;
-	}
-	
-	
-	
 }//class PublicacionService 
