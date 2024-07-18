@@ -1,5 +1,6 @@
 package org.generation.delhaz;
 
+<<<<<<< HEAD
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -30,8 +31,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.http.MediaType;
+=======
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.web.servlet.MockMvc;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Disabled;
+//import org.junit.jupiter.api.DisplayName;
+//import org.springframework.http.MediaType;
+>>>>>>> f992d824a666bdace696b0f28e433af6d369b683
 
 //métodos Get Put Delete Post
+/*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,7 +60,9 @@ import org.generation.delhaz.model.Usuario;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.hamcrest.Matchers.containsString;
+*/
 
+<<<<<<< HEAD
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -77,6 +92,12 @@ class DelhazApplicationTests {
 		.andExpect(content().string(containsString("Artista visual")));
 
 	
+=======
+//@SpringBootTest
+//@AutoConfigureMockMvc
+class DelhazApplicationTests {
+	/*
+>>>>>>> f992d824a666bdace696b0f28e433af6d369b683
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -129,6 +150,7 @@ class DelhazApplicationTests {
 		user.setEmail("luis.maldonado.iqm@gmail.com");
 		user.setFechaRegistro(LocalDateTime.now());
 		user.setFotoPerfil("jasbdkajsbd.jpeg");
+		user.setTelefono("5554455159");
 		
 		this.mockMvc1.perform(post("/api/usuarios/")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -153,6 +175,7 @@ class DelhazApplicationTests {
 		.andExpect( content().string(containsString("Probando metodos"))
 				);
 	}//prueba PUT
+<<<<<<< HEAD
 
 
 	}//pruebaGET
@@ -195,3 +218,7 @@ class DelhazApplicationTests {
 	    }//catch
 	 } // asJsonString
 }//Class EcommerceApplicationTests
+=======
+*/
+}
+>>>>>>> f992d824a666bdace696b0f28e433af6d369b683
