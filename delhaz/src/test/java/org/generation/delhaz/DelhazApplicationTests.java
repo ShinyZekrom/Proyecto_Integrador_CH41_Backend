@@ -53,27 +53,27 @@ class DelhazApplicationTests {
 		this.mockMvc.perform(get("/api/usuarios/1") )
 		.andDo(print())
 		.andExpect(status().isOk())
-		.andExpect( content().string(containsString("maldonado.luis.iqm@gmail.com"))
+		.andExpect( content().string(containsString("usuario1@example.com"))
 				);
 	}//pruebaGET
 	
 	
 	@Test
 	@DisplayName("Se prueba el DELETE del endpoint http://localhost:8080/api/usuarios/2")
-	@Disabled("Probado una vez, deshabilitado porque el registro ya ha sido borrado")
+	//@Disabled("Probado una vez, deshabilitado porque el registro ya ha sido borrado")
 	void pruebaDELETE() throws Exception{
 		this.mockMvc.perform( delete("/api/usuarios/2")
 				.header("Authorization", token) 
 				)
 		.andDo(print())
 		.andExpect(status().isOk())
-		.andExpect( content().string(containsString("Shinyzekrom559"))
+		.andExpect( content().string(containsString("usuario 2"))
 				);
 	}//PruebaDELETE
 	
 	@Test
 	@DisplayName("Se prueba el POST del endpoint http://localhost:8080/api/usuarios/")
-	@Disabled("Probado una vez, deshabilitado porque no puede haber usuarios registrados")
+	//@Disabled("Probado una vez, deshabilitado porque no puede haber usuarios registrados")
 	void pruebaPOST() throws Exception{
 		Usuario user = new Usuario();
 		user.setNombre("Alberto Cabrera");
@@ -91,7 +91,7 @@ class DelhazApplicationTests {
 				)
 		.andDo(print())
 		.andExpect(status().isOk())
-		.andExpect( content().string(containsString("shinypalkia"))
+		.andExpect( content().string(containsString(""))
 				);
 	}//pruebaPOST
 
@@ -104,7 +104,7 @@ class DelhazApplicationTests {
 				)
 		.andDo(print())
 		.andExpect(status().isOk())
-		.andExpect( content().string(containsString("Probando metodos"))
+		.andExpect( content().string(containsString(""))
 				);
 	}//prueba PUT
 

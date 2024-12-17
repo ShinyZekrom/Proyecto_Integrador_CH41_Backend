@@ -47,14 +47,14 @@ public class UsuarioService {
 	    Optional<Usuario> emailUser = usuarioRepository.findByEmail(usuario.getEmail());
 	    Optional<Usuario> usernameUser = usuarioRepository.findByUsername(usuario.getUsername());
 
-	    if (emailUser.isEmpty() && usernameUser.isEmpty()) {
+	    if (emailUser.isPresent() && usernameUser.isPresent()) {
 	        usuario.setPassword(encoder.encode(usuario.getPassword()));
 	        return usuarioRepository.save(usuario);
 	    } else {
-	        if (!emailUser.isEmpty()) {
+	        if (!emailUser.isPresent()) {
 	        	System.out.println("El usuario con el correo [" + usuario.getEmail() + "] ya existe.");
 	        }
-	        if (!usernameUser.isEmpty()) {
+	        if (!usernameUser.isPresent()) {
 	        	System.out.println("El usuario con el nombre [" + usuario.getUsername() + "] ya existe.");
 	        }
 	        return null;

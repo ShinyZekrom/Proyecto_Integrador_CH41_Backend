@@ -39,7 +39,7 @@ public class TipoReaccionService {
     public TipoReaccion addReactiontype(TipoReaccion tipoReaccion) {
     	Optional<TipoReaccion> tmpReactionType = 
     			tipoReaccionRepository.findByNombre(tipoReaccion.getNombre());
-    	if(tmpReactionType.isEmpty()) {
+    	if(tmpReactionType.isPresent()) {
     		return tipoReaccionRepository.save(tipoReaccion);
     	} else {
     		System.out.println("El producto con el nombre [" + 
